@@ -1,7 +1,7 @@
 <template>
   <div ref="dragDiv" class="drag">
     <div class="drag_bg"></div>
-    <div class="drag_text">{{ confirmWords }}</div>
+    <div class="drag_text">{{ successStatus ? successTips : tips }}</div>
     <div ref="moveDiv" class="handler handler_bg" :class="{ 'handler_ok_bg': successStatus }"
          @mousedown="mousedownFn"></div>
   </div>
@@ -10,13 +10,22 @@
 <script>
 export default {
   name: 'VueVerifySlider',
+  props: {
+    tips: {
+      type: String,
+      default: '请按住滑块，拖动到最后边'
+    },
+    successTips: {
+      type: String,
+      default: '验证通过'
+    }
+  },
   data () {
     return {
       successStatus: false,
       beginClientX: 0, /* 距离屏幕左端距离 */
       mouseMoveStatus: false, /* 触发拖动状态  判断 */
-      maxWidth: '', /* 拖动最大宽度，依据滑块宽度算出来的 */
-      confirmWords: '请按住滑块，拖动到最后边' /* 滑块文字 */
+      maxWidth: '' /* 拖动最大宽度，依据滑块宽度算出来的 */
     }
   },
   mounted () {
@@ -32,7 +41,6 @@ export default {
       this.beginClientX = e.clientX
     },
     successFunction () {
-      this.confirmWords = '验证通过'
       this.successStatus = true
       this.$emit('success')
       document.getElementsByTagName('html')[0].removeEventListener('mousemove', this.mouseMoveFn)
