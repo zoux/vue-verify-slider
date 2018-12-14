@@ -1,6 +1,6 @@
 {
   "name": "vue-verify-slider",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "a vue component for sliding verification",
   "main": "dist/vue-verify-slider.common.js",
   "repository": {
