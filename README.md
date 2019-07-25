@@ -5,14 +5,28 @@
 <img src="https://github.com/zoux/vue-verify-slider/blob/master/screenshots/example.gif" />
 
 
+## Install
+
+```bash
+npm i vue-verify-slider -S
+```
+
+
 ## Use
 
-```
-npm i vue-verify-slider -S
+```javascript
+// 在 main.js 中全量引入
+import VerifySlider from 'vue-verify-slider'
+Vue.use(VerifySlider)
 
-import VueVerifySlider from 'vue-verify-slider'
+// 在 main.js 中按需引入
+import { VerifySlider } from 'vue-verify-slider'
+Vue.use(VerifySlider)
+
+// 在 .vue 文件中按需引入
+import { VerifySlider } from 'vue-verify-slider'
 components: {
-  VueVerifySlider
+  VerifySlider
 }
 ```
 

@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'VueVerifySlider',
+  name: 'VerifySlider',
   props: {
     tips: {
       type: String,

@@ -1,16 +1,12 @@
 <template>
   <div id="app">
-    <VueVerifySlider @success="successHandler" />
+    <VerifySlider @success="successHandler" />
     <p>{{ successMsg }}</p>
   </div>
 </template>
 
 <script>
-import VueVerifySlider from './VueVerifySlider'
 export default {
-  components: {
-    VueVerifySlider
-  },
   data () {
     return {
       successMsg: ''

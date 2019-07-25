@@ -1,8 +1,28 @@
 {
   "name": "vue-verify-slider",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "a vue component for sliding verification",
-  "main": "dist/vue-verify-slider.common.js",
+  "main": "dist/vue-verify-slider.umd.min.js",
+  "files": [
+    "dist",
+    "packages"
+  ],
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build --target lib --name vue-verify-slider ./packages/index.js",
+    "release": "sh build/release.sh"
+  },
+  "dependencies": {
+    "core-js": "^2.6.5",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.9.0",
+    "@vue/cli-service": "^3.9.0",
+    "sass": "^1.18.0",
+    "sass-loader": "^7.1.0",
+    "vue-template-compiler": "^2.6.10"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zoux/vue-verify-slider.git"
@@ -17,20 +37,5 @@
   "bugs": {
     "url": "https://github.com/zoux/vue-verify-slider/issues"
   },
-  "homepage": "https://github.com/zoux/vue-verify-slider#readme",
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name vue-verify-slider ./src/VueVerifySlider.vue"
-  },
-  "dependencies": {
-    "core-js": "^2.6.5",
-    "vue": "^2.6.10"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.9.0",
-    "@vue/cli-service": "^3.9.0",
-    "sass": "^1.18.0",
-    "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.6.10"
-  }
+  "homepage": "https://github.com/zoux/vue-verify-slider#readme"
 }
