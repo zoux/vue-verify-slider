@@ -3,7 +3,7 @@
     <div class="drag_bg"></div>
     <div class="drag_text">{{ successStatus ? successTips : tips }}</div>
     <div ref="moveDiv" class="handler handler_bg" :class="{ 'handler_ok_bg': successStatus }"
-         @mousedown="mousedownFn"></div>
+         @touchstart="slideStart" @mousedown="slideStart"></div>
   </div>
 </template>
 
@@ -22,49 +22,82 @@ export default {
   },
   data () {
     return {
+      config: {
+        clientType: null,
+        startEvent: null,
+        moveEvent: null,
+        endEvent: null,
+        getClientX: null
+      },
       successStatus: false,
       beginClientX: 0, /* 距离屏幕左端距离 */
       mouseMoveStatus: false, /* 触发拖动状态  判断 */
       maxWidth: '' /* 拖动最大宽度，依据滑块宽度算出来的 */
     }
   },
+  created () {
+    this.initConfig()
+  },
   mounted () {
     this.maxWidth = this.$refs.dragDiv.clientWidth - this.$refs.moveDiv.clientWidth
-    document.getElementsByTagName('html')[0].addEventListener('mousemove', this.mouseMoveFn)
-    document.getElementsByTagName('html')[0].addEventListener('mouseup', this.moseUpFn)
+    document.getElementsByTagName('html')[0].addEventListener(this.config.moveEvent, this.slideMove)
+    document.getElementsByTagName('html')[0].addEventListener(this.config.endEvent, this.slideEnd)
   },
   methods: {
-    mousedownFn (e) {
+    slideStart (e) {
       if (this.successStatus) return
       e.preventDefault && e.preventDefault() // 阻止文字选中等 浏览器默认事件
       this.mouseMoveStatus = true
-      this.beginClientX = e.clientX
+      this.beginClientX = this.config.getClientX(e)
     },
-    successFunction () {
-      this.successStatus = true
-      this.$emit('success')
-      document.getElementsByTagName('html')[0].removeEventListener('mousemove', this.mouseMoveFn)
-      document.getElementsByTagName('html')[0].removeEventListener('mouseup', this.moseUpFn)
-      document.getElementsByClassName('drag_text')[0].style.color = '#606266'
-      document.getElementsByClassName('handler')[0].style.left = this.maxWidth + 'px'
-      document.getElementsByClassName('drag_bg')[0].style.width = this.maxWidth + 'px'
-    },
-    mouseMoveFn (e) {
+    slideMove (e) {
       if (!this.mouseMoveStatus) return
-      const width = e.clientX - this.beginClientX
-      if (width && width <= this.maxWidth) {
+      const width = this.config.getClientX(e) - this.beginClientX
+      if (width < 0) return
+      if (width <= this.maxWidth) {
         this.$el.getElementsByClassName('handler')[0].style.left = width + 'px'
         this.$el.getElementsByClassName('drag_bg')[0].style.width = width + 'px'
       } else if (width > this.maxWidth) {
         this.successFunction()
       }
     },
-    moseUpFn (e) {
+    slideEnd (e) {
       this.mouseMoveStatus = false
-      const width = e.clientX - this.beginClientX
+      const width = this.config.getClientX(e) - this.beginClientX
+      if (width < 0) return
       if (width < this.maxWidth) {
         this.$el.getElementsByClassName('handler')[0].style.left = 0 + 'px'
         this.$el.getElementsByClassName('drag_bg')[0].style.width = 0 + 'px'
+      }
+    },
+    successFunction () {
+      this.successStatus = true
+      this.$emit('success')
+      document.getElementsByTagName('html')[0].removeEventListener(this.config.moveEvent, this.slideMove)
+      document.getElementsByTagName('html')[0].removeEventListener(this.config.endEvent, this.slideEnd)
+      document.getElementsByClassName('drag_text')[0].style.color = '#606266'
+      document.getElementsByClassName('handler')[0].style.left = this.maxWidth + 'px'
+      document.getElementsByClassName('drag_bg')[0].style.width = this.maxWidth + 'px'
+    },
+    getClientX (e) {
+      if (this.config.clientType === 'mobile') {
+        return e.changedTouches[0].clientX
+      } else {
+        return e.clientX
+      }
+    },
+    initConfig () {
+      this.config.clientType = navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i) ? 'mobile' : 'pc'
+      if (this.config.clientType === 'mobile') {
+        this.config.startEvent = 'touchstart'
+        this.config.moveEvent = 'touchmove'
+        this.config.endEvent = 'touchend'
+        this.config.getClientX = e => e.changedTouches[0].clientX
+      } else {
+        this.config.startEvent = 'mousedown'
+        this.config.moveEvent = 'mousemove'
+        this.config.endEvent = 'mouseup'
+        this.config.getClientX = e => e.clientX
       }
     }
   }
