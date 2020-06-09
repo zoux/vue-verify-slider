@@ -40,8 +40,10 @@ export default {
   },
   mounted () {
     this.maxWidth = this.$refs.dragDiv.clientWidth - this.$refs.moveDiv.clientWidth
-    document.getElementsByTagName('html')[0].addEventListener(this.config.moveEvent, this.slideMove)
-    document.getElementsByTagName('html')[0].addEventListener(this.config.endEvent, this.slideEnd)
+    this.init()
+  },
+  destroyed () {
+    this.removeEvent()
   },
   methods: {
     slideStart (e) {
@@ -73,8 +75,7 @@ export default {
     successFunction () {
       this.successStatus = true
       this.$emit('success')
-      document.getElementsByTagName('html')[0].removeEventListener(this.config.moveEvent, this.slideMove)
-      document.getElementsByTagName('html')[0].removeEventListener(this.config.endEvent, this.slideEnd)
+      this.removeEvent()
       document.getElementsByClassName('drag_text')[0].style.color = '#606266'
       document.getElementsByClassName('handler')[0].style.left = this.maxWidth + 'px'
       document.getElementsByClassName('drag_bg')[0].style.width = this.maxWidth + 'px'
@@ -99,6 +100,21 @@ export default {
         this.config.endEvent = 'mouseup'
         this.config.getClientX = e => e.clientX
       }
+    },
+    init () {
+      this.removeEvent()
+      document.getElementsByTagName('html')[0].addEventListener(this.config.moveEvent, this.slideMove)
+      document.getElementsByTagName('html')[0].addEventListener(this.config.endEvent, this.slideEnd)
+      this.successStatus = false
+      this.beginClientX = 0
+      this.mouseMoveStatus = false
+      document.getElementsByClassName('drag_text')[0].style.color = ''
+      document.getElementsByClassName('handler')[0].style.left = ''
+      document.getElementsByClassName('drag_bg')[0].style.width = ''
+    },
+    removeEvent () {
+      document.getElementsByTagName('html')[0].removeEventListener(this.config.moveEvent, this.slideMove)
+      document.getElementsByTagName('html')[0].removeEventListener(this.config.endEvent, this.slideEnd)
     }
   }
 }

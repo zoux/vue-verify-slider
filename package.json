@@ -1,6 +1,6 @@
 {
   "name": "vue-verify-slider",
-  "version": "1.4.0",
+  "version": "1.5.1",
   "description": "a vue component for sliding verification",
   "main": "dist/vue-verify-slider.umd.min.js",
   "files": [
@@ -13,15 +13,15 @@
     "release": "sh build/release.sh"
   },
   "dependencies": {
-    "core-js": "^2.6.5",
-    "vue": "^2.6.10"
+    "core-js": "^2.6.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.9.0",
     "@vue/cli-service": "^3.9.0",
     "sass": "^1.18.0",
     "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue": "^2.6.11",
+    "vue-template-compiler": "^2.6.11"
   },
   "repository": {
     "type": "git",
