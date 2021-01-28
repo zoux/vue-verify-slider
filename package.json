@@ -1,6 +1,6 @@
 {
   "name": "vue-verify-slider",
-  "version": "1.5.1",
+  "version": "2.0.0",
   "description": "a vue component for sliding verification",
   "main": "dist/vue-verify-slider.umd.min.js",
   "files": [
