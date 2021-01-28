@@ -8,7 +8,7 @@
 ## Install
 
 ```bash
-npm i vue-verify-slider -S
+npm i vue-verify-slider@2 -S
 ```
 
 
