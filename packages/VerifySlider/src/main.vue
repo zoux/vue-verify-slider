@@ -42,7 +42,7 @@ export default {
     this.maxWidth = this.$refs.dragDiv.clientWidth - this.$refs.moveDiv.clientWidth
     this.init()
   },
-  destroyed () {
+  unmounted () {
     this.removeEvent()
   },
   methods: {

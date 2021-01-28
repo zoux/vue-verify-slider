@@ -1,6 +1,6 @@
 ## vue-verify-slider
 
-基于 vue 2.x 的滑动验证组件，原生 js 实现、体积小。
+基于 vue 的滑动验证组件，简单易用。支持 vue 2/3。
 
 <img src="https://github.com/zoux/vue-verify-slider/blob/master/screenshots/example.gif" />
 
@@ -17,11 +17,11 @@ npm i vue-verify-slider@2 -S
 ```javascript
 // 在 main.js 中全量引入
 import VerifySlider from 'vue-verify-slider'
-Vue.use(VerifySlider)
+app.use(VerifySlider)
 
 // 在 main.js 中按需引入
 import { VerifySlider } from 'vue-verify-slider'
-Vue.use(VerifySlider)
+app.use(VerifySlider)
 
 // 在 .vue 文件中按需引入
 import { VerifySlider } from 'vue-verify-slider'
